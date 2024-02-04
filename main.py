@@ -2,7 +2,7 @@ from crewai import Agent, Task, Crew
 import os
 import openai
 
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = "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"
 
 
 def researcher_agent(topic):
