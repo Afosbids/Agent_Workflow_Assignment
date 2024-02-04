@@ -6,7 +6,6 @@ os.environ["OPENAI_API_KEY"] = "sk-iCfVuVU7yvlGeATCLsxhT3BlbkFJJmUAKgFV68buvQmJ7
 
 
 def researcher_agent(topic):
-    # Use CrewAI with the OpenHermes model to generate ideas for teaching the topic
     response = openai.Completion.create(
         engine="openhermes",
         prompt=f"Teach someone new about {topic}.",
@@ -18,7 +17,6 @@ def researcher_agent(topic):
 
 
 def writer_agent(researcher_ideas):
-    # Use CrewAI with the OpenHermes model to generate a piece of text to explain the topic
     response = openai.Completion.create(
         engine="openhermes",
         prompt=f"{researcher_ideas}\nNow, explain the topic in detail.",
@@ -30,7 +28,6 @@ def writer_agent(researcher_ideas):
 
 
 def examiner_agent(written_content):
-    # Use CrewAI with the OpenHermes model to generate 2-3 test questions based on the content
     response = openai.Completion.create(
         engine="text-ollama-002",
         prompt=f"{written_content}\nNow, generate 2-3 test questions.",
@@ -51,7 +48,7 @@ researcher = Agent(
     actionable insights.""",
     verbose=True,
     allow_delegation=False,
-    tools=[researcher_agent]  # Pass the researcher_agent function
+    tools=[researcher_agent]
 )
 
 
@@ -63,7 +60,7 @@ writer = Agent(
     You transform complex concepts into compelling narratives.""",
     verbose=True,
     allow_delegation=True,
-    tools=[writer_agent]  # Pass the writer_agent function
+    tools=[writer_agent]
 )
 
 
@@ -75,7 +72,7 @@ examiner = Agent(
     Your keen eye for detail helps maintain the highest standards.""",
     verbose=True,
     allow_delegation=False,
-    tools=[examiner_agent]  # Pass the examiner_agent function
+    tools=[examiner_agent]
 )
 
 
@@ -106,7 +103,7 @@ task3 = Task(
 crew = Crew(
     agents=[researcher, writer, examiner],
     tasks=[task1, task2, task3],
-    verbose=2,  # You can set it to 1 or 2 for different logging levels
+    verbose=2,
 )
 
 
